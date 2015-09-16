@@ -1,6 +1,6 @@
 {
   "name": "postcss-resolve-prop",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "PostCSS helper method to shallowly iterate over each declaration.",
   "main": "index.js",
   "scripts": {

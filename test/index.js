@@ -18,12 +18,12 @@ tape('postcss-resolve-prop', function(t) {
 		'it uses the default value if no matching declaration is found'
 	);
 
-	rule = postcss.parse(`
-		a {
-			foo: no;
-			foo: yes;
-		}
-	`).first;
+	rule = postcss.parse([
+		'a {',
+		'  foo: no;',
+		'  foo: yes;',
+		'}'
+	].join('')).first;
 
 	t.equal(
 		resolveProp(rule, 'foo'),
@@ -31,18 +31,18 @@ tape('postcss-resolve-prop', function(t) {
 		'it resolves the last declaration as the final value'
 	);
 
-	rule = postcss.parse(`
-		a {
-			foo: no;
-			b {
-				foo: no;
-			}
-			@c {
-				foo: no;
-			}
-			foo: yes;
-		}
-	`).first;
+	rule = postcss.parse([
+		'a {',
+		'  foo: no;',
+		'  b {',
+		'    foo: no;',
+		'  }',
+		'  @c {',
+		'    foo: no;',
+		'  }',
+		'  foo: yes;',
+		'}',
+	].join('')).first;
 
 	t.equal(
 		resolveProp(rule, 'foo'),
@@ -64,12 +64,12 @@ tape('postcss-resolve-prop', function(t) {
 		'it resolves a shorthand prop if a parser is provided'
 	);
 
-	rule = postcss.parse(`
-		a {
-			foo-bar: no;
-			foo: no;
-		}
-	`).first;
+	rule = postcss.parse([
+		'a {',
+		'  foo-bar: no;',
+		'  foo: no;',
+		'}',
+	].join('')).first;
 
 	t.equal(
 		resolveProp(rule, 'foo-bar', {
@@ -83,12 +83,12 @@ tape('postcss-resolve-prop', function(t) {
 		'overrides the full prop with the shorthand prop value, if provided last'
 	);
 
-	rule = postcss.parse(`
-		a {
-			foo: no;
-			foo-bar: yes;
-		}
-	`).first;
+	rule = postcss.parse([
+		'a {',
+		'  foo: no;',
+		'  foo-bar: yes;',
+		'}',
+	].join('')).first;
 
 	t.equal(
 		resolveProp(rule, 'foo-bar', {
