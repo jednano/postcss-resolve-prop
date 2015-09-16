@@ -56,7 +56,7 @@ tape('postcss-resolve-prop', function(t) {
 		resolveProp(rule, 'foo-bar', {
 			shorthandParser: function(value) {
 				return {
-					bar: `${value}-qux`
+					bar: value + '-qux'
 				};
 			}
 		}),
