@@ -1,0 +1,35 @@
+{
+  "name": "postcss-resolve-prop",
+  "version": "1.0.0",
+  "description": "PostCSS helper method to shallowly iterate over each declaration.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run tape",
+    "tape": "tape 'test/*.js'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jedmao/postcss-resolve-prop.git"
+  },
+  "keywords": [
+    "postcss",
+    "helpers",
+    "resolve",
+    "prop",
+    "property"
+  ],
+  "author": "Jed Mao <jedmao@outlook.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jedmao/postcss-resolve-prop/issues"
+  },
+  "homepage": "https://github.com/jedmao/postcss-resolve-prop#readme",
+  "dependencies": {
+    "postcss-each-decl": "^1.0.1",
+    "tcomb-postcss": "^1.0.2"
+  },
+  "devDependencies": {
+    "postcss": "^5.0.5",
+    "tape": "^4.2.0"
+  }
+}
