@@ -6,12 +6,13 @@ var Options = t.struct({
 }, 'Options');
 
 var StrNum = t.union([t.String, t.Number]);
-var Parser = t.func(t.String, StrNum);
+var StrNumArray = t.union([StrNum, t.list(StrNum)]);
+var Parser = t.func(t.String, StrNumArray);
 
 module.exports = function(rule, prop, opts) {
 	opts = opts || {};
 	return (
-		t.func([t.Rule, t.String, Options], t.maybe(StrNum))
+		t.func([t.Rule, t.String, Options], t.maybe(StrNumArray))
 		.of(postcssResolveProp)(rule, prop, opts)
 	);
 };

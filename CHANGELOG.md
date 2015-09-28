@@ -1,5 +1,8 @@
+## 2.2.0
+- Allow arrays to be returned.
+
 ## 2.1.0
-- Allow numbers to also be returned.
+- Allow numbers to be returned.
 
 ## 2.0.0
 - Remove `defaultValue` and `shorthandParser` options.
