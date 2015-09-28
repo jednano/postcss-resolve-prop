@@ -39,23 +39,24 @@ A more complicated example is when [shorthand properties](https://developer.mozi
 
 ```css
 a {
-	border-color: red;
-	border: 1px solid blue;
+	font-size: 1rem;
+	font: 1.2rem serif;
 }
 ```
 
-Let's get the `border-color`:
+Let's get the `font-size`:
 
 ```js
-resolveProp(rule, 'border-color', {
-	defaultValue: 'black', // Note: varies from one browser to another
-	shorthandParser: function(value) {
-		return {
-			color: postcss.list.space(value).pop() // Just a stupid example
-		};
+resolveProp(rule, 'font-size', {
+	parsers: {
+		font: function(value) {
+			return require('parse-css-font')(value).size;
+		}
 	}
-}); // blue
+}); // 1.2rem
 ```
+
+If no value can be resolved, `null` will be returned.
 
 ## Installation
 
@@ -71,28 +72,26 @@ require('postcss-resolve-prop')(rule, prop[, options]);
 
 ### rule
 
-See [`PostCSS#Rule`](https://github.com/postcss/postcss/blob/master/docs/api.md#rule-node).
+The rule you wish to read. See [`PostCSS#Rule`](https://github.com/postcss/postcss/blob/master/docs/api.md#rule-node).
 
 ### prop
 
-See [`PostCSS#Declaration#prop`](https://github.com/postcss/postcss/blob/master/docs/api.md#declarationprop).
+The property you wish to read. See [`PostCSS#Declaration#prop`](https://github.com/postcss/postcss/blob/master/docs/api.md#declarationprop).
 
 ## Options
 
-### defaultValue
+### parsers
 
-Type: `string`<br>
+Type: `Object`<br>
 Required: `false`<br>
 Default: `undefined`
 
-Refer to the CSS specification for what the default value should be for the property you are reading.
+An object where the keys map to CSS properties and the values are functions that parse the declaration value into a result.
 
-### shorthandParser
-
-Type: `(value) => {}`<br>
-Required: `false`<br>
-Default: `undefined`
-
-If provided, the shorthand property will be implied by the beginning of your `prop` arg. For example, if you provide a `prop` named `border-color`, then `border` is the implied shorthand prop.
-
-The function you provide takes in the shorthand property value and should return a plain JavaScript object where the keys map to CSS properties without the prefix.
+```js
+{
+	parser: function(value) {
+		return require('parse-css-font')(value).size;
+	}
+}
+```

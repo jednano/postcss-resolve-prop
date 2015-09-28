@@ -13,9 +13,9 @@ tape('postcss-resolve-prop', function(t) {
 	);
 
 	t.equal(
-		resolveProp(rule, 'bar', { defaultValue: 'default' }),
-		'default',
-		'it uses the default value if no matching declaration is found'
+		resolveProp(rule, 'bar'),
+		null,
+		'it returns null if no matching prop is found'
 	);
 
 	rule = postcss.parse([
@@ -54,14 +54,14 @@ tape('postcss-resolve-prop', function(t) {
 
 	t.equal(
 		resolveProp(rule, 'foo-bar', {
-			shorthandParser: function(value) {
-				return {
-					bar: value + '-qux'
-				};
+			parsers: {
+				foo: function(value) {
+					return value + '-qux';
+				}
 			}
 		}),
 		'baz-qux',
-		'it resolves a shorthand prop if a parser is provided'
+		'it resolves with a parser, if provided'
 	);
 
 	rule = postcss.parse([
@@ -73,10 +73,10 @@ tape('postcss-resolve-prop', function(t) {
 
 	t.equal(
 		resolveProp(rule, 'foo-bar', {
-			shorthandParser: function(value) {
-				return {
-					bar: 'yes'
-				};
+			parsers: {
+				foo: function(value) {
+					return 'yes';
+				}
 			}
 		}),
 		'yes',
@@ -92,10 +92,10 @@ tape('postcss-resolve-prop', function(t) {
 
 	t.equal(
 		resolveProp(rule, 'foo-bar', {
-			shorthandParser: function(value) {
-				return {
-					bar: 'no'
-				};
+			parsers: {
+				foo: function(value) {
+					return 'no';
+				}
 			}
 		}),
 		'yes',

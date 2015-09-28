@@ -2,38 +2,27 @@
 var eachDecl = require('postcss-each-decl');
 
 var Options = t.struct({
-	defaultValue: t.maybe(t.Str),
-	shorthandParser: t.maybe(t.Func)
+	parsers: t.maybe(t.Object)
 }, 'Options');
 
 module.exports = function(rule, prop, opts) {
 	opts = opts || {};
 	return (
-		t.func([t.Rule, t.Str, Options], t.maybe(t.Str))
+		t.func([t.Rule, t.String, Options], t.maybe(t.String))
 		.of(postcssResolveProp)(rule, prop, opts)
 	);
 };
 
 function postcssResolveProp(rule, prop, opts) {
 
-	var result = opts.defaultValue;
-
-	if (!t.Func.is(opts.shorthandParser)) {
-		eachDecl(rule, function(decl) {
-			if (decl.prop === prop) {
-				result = decl.value;
-			}
-		});
-		return result;
-	}
-
-	var parts = prop.split('-');
-	var shorthandPrefix = parts.shift();
-	var shorthandSuffix = parts.join('-');
+	var result;
+	var parsers = opts.parsers || {};
 
 	eachDecl(rule, function(decl) {
-		if (decl.prop === shorthandPrefix) {
-			result = opts.shorthandParser(decl.value)[shorthandSuffix];
+		var parse = t.maybe(t.Function)(parsers[decl.prop]);
+		if (t.Function.is(parse)) {
+			result = parse(decl.value);
+			return;
 		}
 		if (decl.prop === prop) {
 			result = decl.value;

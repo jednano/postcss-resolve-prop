@@ -1,3 +1,7 @@
+## 2.0.0
+- Remove `defaultValue` and `shorthandParser` options.
+- Add `parsers` option.
+
 ## 1.0.2
 - Fix Node 0.12.
 
