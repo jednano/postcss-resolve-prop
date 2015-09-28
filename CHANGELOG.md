@@ -1,3 +1,6 @@
+## 2.1.0
+- Allow numbers to also be returned.
+
 ## 2.0.0
 - Remove `defaultValue` and `shorthandParser` options.
 - Add `parsers` option.

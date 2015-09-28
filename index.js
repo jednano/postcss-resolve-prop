@@ -5,10 +5,13 @@ var Options = t.struct({
 	parsers: t.maybe(t.Object)
 }, 'Options');
 
+var StrNum = t.union([t.String, t.Number]);
+var Parser = t.func(t.String, StrNum);
+
 module.exports = function(rule, prop, opts) {
 	opts = opts || {};
 	return (
-		t.func([t.Rule, t.String, Options], t.maybe(t.String))
+		t.func([t.Rule, t.String, Options], t.maybe(StrNum))
 		.of(postcssResolveProp)(rule, prop, opts)
 	);
 };
@@ -19,8 +22,8 @@ function postcssResolveProp(rule, prop, opts) {
 	var parsers = opts.parsers || {};
 
 	eachDecl(rule, function(decl) {
-		var parse = t.maybe(t.Function)(parsers[decl.prop]);
-		if (t.Function.is(parse)) {
+		var parse = t.maybe(Parser)(parsers[decl.prop]);
+		if (Parser.is(parse)) {
 			result = parse(decl.value);
 			return;
 		}
