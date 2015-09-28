@@ -1,3 +1,7 @@
+## 3.0.0
+- Allow anything to be returned.
+- Returns `undefined` if no property is found.
+
 ## 2.2.0
 - Allow arrays to be returned.
 

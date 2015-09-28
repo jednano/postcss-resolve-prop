@@ -14,7 +14,7 @@ tape('postcss-resolve-prop', function(t) {
 
 	t.equal(
 		resolveProp(rule, 'bar'),
-		null,
+		void 0,
 		'it returns null if no matching prop is found'
 	);
 
