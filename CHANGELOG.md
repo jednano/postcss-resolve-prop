@@ -1,3 +1,6 @@
+## 3.1.0
+- Add `isObjectMode` option.
+
 ## 3.0.0
 - Allow anything to be returned.
 - Returns `undefined` if no property is found.

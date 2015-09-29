@@ -80,6 +80,14 @@ The property you wish to read. See [`PostCSS#Declaration#prop`](https://github.c
 
 ## Options
 
+### isObjectMode
+
+Type: `Boolean`<br>
+Required: `false`<br>
+Default: `undefined`
+
+Accumulates parser result objects into a final result object.
+
 ### parsers
 
 Type: `Object`<br>

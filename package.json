@@ -1,6 +1,6 @@
 {
   "name": "postcss-resolve-prop",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "PostCSS helper method to shallowly iterate over each declaration.",
   "main": "index.js",
   "scripts": {
@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/jedmao/postcss-resolve-prop#readme",
   "dependencies": {
+    "object-assign": "^4.0.1",
     "postcss-each-decl": "^1.0.1",
     "tcomb-postcss": "^1.0.2"
   },

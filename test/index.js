@@ -102,5 +102,51 @@ tape('postcss-resolve-prop', function(t) {
 		'overrides the shorhand property value with the full prop, if provided last'
 	);
 
+	t.test('options', testOptions);
+
 	t.end();
 });
+
+function testOptions(t) {
+	t.test('isObjectMode', testObjectMode);
+	t.end();
+}
+
+function testObjectMode(t) {
+
+	var rule = postcss.parse([
+		'a {',
+		'  foo-bar: a;',
+		'  foo: b c;',
+		'  foo-baz: d;',
+		'}',
+	].join('')).first;
+
+	t.deepEqual(
+		resolveProp(rule, 'foo', {
+			isObjectMode: true,
+			parsers: {
+				foo: function(value) {
+					var parts = value.split(/\s+/);
+					return {
+						bar: parts[0],
+						baz: parts[1]
+					};
+				},
+				'foo-bar': function(value) {
+					return { bar: value };
+				},
+				'foo-baz': function(value) {
+					return { baz: value };
+				}
+			}
+		}),
+		{
+			bar: 'b',
+			baz: 'd'
+		},
+		'accumulates objects'
+	);
+
+	t.end();
+}
